@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutmain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_light"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcNote"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layouttoolbar"
+        android:layout_marginTop="@dimen/margin_5" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fbAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_big"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_add"
+        android:tint="@android:color/white"
+        app:fabSize="normal" />
+
+    <LinearLayout
+        android:id="@+id/layoutOption"
+        android:layout_width="@dimen/layout_150"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_big"
+        android:layout_marginTop="@dimen/margin_big"
+        android:background="@drawable/draw_option"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_mid"
+            android:layout_marginTop="@dimen/margin_5"
+            android:text="@string/all_note"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_15" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_1"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@color/color_hint" />
+
+        <TextView
+            android:id="@+id/fv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_mid"
+            android:layout_marginTop="@dimen/margin_5"
+            android:text="@string/favorite"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_15" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_1"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@color/color_hint" />
+
+        <TextView
+            android:id="@+id/tvCancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_mid"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:text="@string/cancle"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_15" />
+    </LinearLayout>
+
+</RelativeLayout>

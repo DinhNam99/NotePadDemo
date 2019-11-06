@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoteActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layouttoolbar"
+        >
+        <androidx.appcompat.widget.Toolbar
+            app:title=""
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_width_heigth_mid"
+            android:background="@color/color_light"
+            app:theme="@style/GalaxyZooThemeToolbarDarkOverflow"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+            >
+        </androidx.appcompat.widget.Toolbar>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/sv_content_new_note"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layouttoolbar"
+        android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_1"
+                android:background="@color/color_hint"
+                android:layout_alignParentTop="true"
+                />
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="@dimen/margin_5"
+                android:text=""
+                android:textColor="#d07e7b7b" />
+            <EditText
+                android:id="@+id/edTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_50"
+                android:layout_below="@id/tvDate"
+                android:backgroundTint="#a89b9999"
+                android:hint="@string/enter_title"
+                android:inputType="text"
+                android:lines="1"
+                android:paddingLeft="@dimen/margin_mid"
+                android:paddingRight="@dimen/margin_mid"
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@drawable/color_cusor"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edTitle"
+                android:backgroundTint="#a89b9999"
+                android:hint="@string/enter_content"
+                android:inputType="textMultiLine"
+                android:paddingLeft="@dimen/margin_mid"
+                android:paddingRight="@dimen/margin_mid"
+                android:scrollbars="vertical"
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@drawable/color_cusor" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
