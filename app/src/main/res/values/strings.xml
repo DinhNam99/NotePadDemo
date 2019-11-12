@@ -1,29 +1,20 @@
 <resources>
-
-    <string name="app_name">NoteApp</string>
-
+    <string name="app_name">Note+</string>
     <string name="title">Title</string>
-
     <string name="content">Content</string>
-
     <string name="all_note">All notes</string>
-
     <string name="favorite">Favorite</string>
-
     <string name="save">Save</string>
-
     <string name="delete">Delete</string>
-
     <string name="share">Share</string>
-
     <string name="enter_title">Enter title</string>
-
     <string name="enter_content">Enter content</string>
-
     <string name="search">Search</string>
-
     <string name="date">01-11-2019</string>
-
     <string name="cancle">Cancle</string>
+    <string name="voice_hint">Speak now</string>
+    <string name="draw_options">Draw options:</string>
+    <string name="brush_color">Brush color:</string>
+    <string name="brush_size">Brush size:</string>
 
 </resources>

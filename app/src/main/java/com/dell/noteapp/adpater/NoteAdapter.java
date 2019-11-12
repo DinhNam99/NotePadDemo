@@ -2,6 +2,7 @@ package com.dell.noteapp.adpater;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dell.noteapp.NoteActivity;
+import com.dell.noteapp.view.NoteActivity;
 import com.dell.noteapp.R;
 import com.dell.noteapp.entity.Note;
 
@@ -41,7 +43,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
         final Note note = noteList.get(position);
         holder.tvTitle.setText(note.getTitle()+"");
-        holder.tvContent.setText(note.getContent()+"");
+
+        if(note.getContent().length()>50){
+            String content = note.getContent().substring(0,40)+"...";
+            holder.tvContent.setText(content);
+        }else {
+            holder.tvContent.setText(note.getContent() + "");
+        }
 
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +68,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         }else{
             holder.imageFv.setVisibility(View.INVISIBLE);
         }
+
     }
 
     @Override
@@ -67,17 +76,25 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         return noteList.size();
     }
 
+    public void removeItem(int position) {
+        noteList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, noteList.size());
+    }
+
     public class NoteHolder extends RecyclerView.ViewHolder{
 
         TextView tvTitle, tvContent;
         RelativeLayout layoutItem;
         ImageView imageFv;
+        CardView cardView;
         public NoteHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvContent = itemView.findViewById(R.id.tvContent);
             layoutItem = itemView.findViewById(R.id.layoutitem);
             imageFv = itemView.findViewById(R.id.imageFv);
+            cardView = itemView.findViewById(R.id.cardviewitem);
         }
     }
 }

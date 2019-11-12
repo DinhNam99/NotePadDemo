@@ -14,5 +14,9 @@
         android:icon="@drawable/ic_favorite_border"
         app:showAsAction="always"
         />
+    <item app:showAsAction="always"
+        android:title="voice"
+        android:id="@+id/voice"
+        android:icon="@drawable/ic_voice"/>
 
 </menu>

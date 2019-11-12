@@ -1,10 +1,13 @@
 package com.dell.noteapp.entity;
 
+import android.graphics.Bitmap;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 
 @Entity
@@ -19,6 +22,7 @@ public class Note implements Serializable {
     private String date;
     @ColumnInfo(name = "favorite")
     private boolean favorite;
+
 
     public int getId() {
         return id;
@@ -57,5 +61,15 @@ public class Note implements Serializable {
     }
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public Note(String title, String content, String date, boolean favorite) {
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.favorite = favorite;
+    }
+
+    public Note() {
     }
 }
