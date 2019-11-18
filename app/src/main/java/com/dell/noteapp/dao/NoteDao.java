@@ -16,9 +16,6 @@ public interface NoteDao {
     @Query("Select * from Note")
     List<Note> getAllNote();
 
-    @Query("Select * from Note where favorite = :isFv")
-    List<Note> getNoteByFavrite(boolean isFv);
-
     @Insert
     void insert(Note note);
 
@@ -27,4 +24,7 @@ public interface NoteDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(Note note);
+
+    @Query("UPDATE Note SET favorite = :isFV WHERE id = :id")
+    void updateFV(boolean isFV, int id);
 }

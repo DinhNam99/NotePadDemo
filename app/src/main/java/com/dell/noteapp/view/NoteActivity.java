@@ -3,7 +3,6 @@ package com.dell.noteapp.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.Spanned;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,9 +22,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.dell.noteapp.R;
-import com.dell.noteapp.database.DBNoteHelper;
 import com.dell.noteapp.entity.Note;
+import com.dell.noteapp.utils.UtilsHelper;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -34,10 +33,10 @@ public class NoteActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     EditText edTitle, edNote;
-    TextView tvDate;
+    TextView tvDate,create_edit;
     Note noteM = new Note();
     String option;
-    byte[] b;
+    UtilsHelper utilsHelper;
 
     // Request code for voice input
     private static final int REQUEST_CODE = 1234;
@@ -46,8 +45,14 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+
+        utilsHelper = new UtilsHelper(this);
         init();
-        setUpLoading();
+        try {
+            setUpLoading();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void init() {
@@ -65,17 +70,23 @@ public class NoteActivity extends AppCompatActivity {
         edTitle = findViewById(R.id.edTitle);
         edNote = findViewById(R.id.edNote);
         tvDate = findViewById(R.id.tvDate);
+        create_edit = findViewById(R.id.create_edit);
 
     }
 
-    public void setUpLoading(){
+    public void setUpLoading() throws ParseException {
         Intent intent = getIntent();
         option = intent.getStringExtra("option");
         noteM = (Note) intent.getSerializableExtra("Note");
         if(noteM!=null) {
             edTitle.setText(noteM.getTitle());
             edNote.setText(noteM.getContent());
-            tvDate.setText(noteM.getDate());
+            tvDate.setText(utilsHelper.setUpDate(noteM.getDate()));
+        }
+        if(option.equals("Add")){
+            create_edit.setText("Create note");
+        }else if(option.equals("Update")){
+            create_edit.setText("Edit note");
         }
 
     }
@@ -87,9 +98,9 @@ public class NoteActivity extends AppCompatActivity {
         }else if(option.equals("Update")) {
             getMenuInflater().inflate(R.menu.menu_note, menu);
             if(noteM.isFavorite()) {
-                menu.getItem(3).setIcon(R.drawable.ic_favorite);
+                menu.getItem(3).getIcon().setTint(getResources().getColor(R.color.colorPrimary));
             }else{
-                menu.getItem(3).setIcon(R.drawable.ic_favorite_border);
+                menu.getItem(3).getIcon().setTint(getResources().getColor(R.color.textFormatWhite));
             }
         }
         return true;
@@ -98,17 +109,20 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        final String title = edTitle.getText().toString();
+        final String content = edNote.getText().toString();
+        final Date date = new Date();
         switch (id){
             case R.id.menu_share:
                 shareNote(noteM);
                 break;
             case R.id.menu_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(NoteActivity.this);
-                builder.setTitle("Are you sure?");
+                builder.setTitle("Are you sure you want to delete this note?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        deleteNote(noteM);
+                        utilsHelper.deleteNote(noteM,"n");
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -124,18 +138,42 @@ public class NoteActivity extends AppCompatActivity {
                 break;
             case R.id.menu_fav:
                 if(noteM.isFavorite()){
-                    item.setIcon(R.drawable.ic_favorite_border);
+                    item.getIcon().setTint(getResources().getColor(R.color.textFormatWhite));
                     noteM.setFavorite(false);
+                    utilsHelper.updateFV(noteM);
                 }else{
-                    item.setIcon(R.drawable.ic_favorite);
+                    item.getIcon().setTint(getResources().getColor(R.color.colorPrimary));
                     noteM.setFavorite(true);
+                    utilsHelper.updateFV(noteM);
                 }
                 break;
             case R.id.menu_saveAdd:
-                save(new Note());
+                if (title.isEmpty()) {
+                    edTitle.setError("Please enter title!");
+                    edTitle.requestFocus();
+                    break;
+                }
+
+                if (content.isEmpty()) {
+                    edNote.setError("Please enter content");
+                    edNote.requestFocus();
+                    break;
+                }
+                utilsHelper.save(new Note(),title,content,date,option);
                 break;
             case R.id.menu_saveUpdate:
-                save(noteM);
+                if (title.isEmpty()) {
+                    edTitle.setError("Please enter title!");
+                    edTitle.requestFocus();
+                    break;
+                }
+
+                if (content.isEmpty()) {
+                    edNote.setError("Please enter content");
+                    edNote.requestFocus();
+                    break;
+                }
+                utilsHelper.save(noteM,title,content,date,option);
                 break;
             case R.id.voice:
                 Log.e("CLICK","v");
@@ -143,73 +181,6 @@ public class NoteActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void save(final Note note) {
-        final String title = edTitle.getText().toString();
-        final String content = edNote.getText().toString();
-        final Date date = new Date();
-
-        if (title.isEmpty()) {
-            edTitle.setError("Please enter title!");
-            edTitle.requestFocus();
-            return;
-        }
-
-        if (content.isEmpty()) {
-            edNote.setError("Please enter content");
-            edNote.requestFocus();
-            return;
-        }
-
-        class SaveNote extends AsyncTask<Void, Void, Void>{
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                note.setTitle(title);
-                note.setContent(content);
-                note.setDate(date.toString());
-                if(option.equals("Update")){
-                    Log.e("NOTE",title+"-"+content+"-"+date.toString());
-                    DBNoteHelper.getInstance(getApplicationContext()).getNoteDatabase().getNoteDao().update(note);
-                }else if(option.equals("Add")) {
-                    DBNoteHelper.getInstance(getApplicationContext()).getNoteDatabase().getNoteDao().insert(note);
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                //startActivity(new Intent(NoteActivity.this, MainActivity.class));
-                finish();
-            }
-        }
-        SaveNote saveNote = new SaveNote();
-        saveNote.execute();
-    }
-    private void deleteNote(final Note note){
-        class DeleteNote extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                DBNoteHelper.getInstance(getApplicationContext()).getNoteDatabase()
-                        .getNoteDao()
-                        .delete(note);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
-                //startActivity(new Intent(NoteActivity.this, MainActivity.class));
-                finish();
-            }
-        }
-
-        DeleteNote dt = new DeleteNote();
-        dt.execute();
     }
     private void shareNote(Note note) {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);

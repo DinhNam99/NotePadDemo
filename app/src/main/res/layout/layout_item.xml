@@ -39,20 +39,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/content"
-                android:textSize="@dimen/layout_15"
+                android:textSize="@dimen/text_15"
                 android:textColor="@color/color_text"
                 android:layout_below="@+id/tvTitle"
                 android:layout_marginTop="@dimen/margin_5"
                 android:maxLines="2"
                 android:id="@+id/tvContent"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:textSize="@dimen/text_13"
+                android:textColor="@color/color_text"
+                android:layout_below="@+id/tvContent"
+                android:layout_marginTop="@dimen/margin_5"
+                android:id="@+id/tvDate"
+                />
             <ImageView
-                android:layout_width="@dimen/layout_35"
-                android:layout_height="@dimen/layout_35"
+                android:layout_width="@dimen/layout_25"
+                android:layout_height="@dimen/layout_25"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/margin_5"
+                android:layout_centerVertical="true"
                 android:src="@drawable/star"
                 android:id="@+id/imageFv"
-                android:visibility="invisible"
+                />
+            <ImageView
+                android:layout_width="@dimen/layout_20"
+                android:layout_height="@dimen/layout_20"
+                android:layout_marginRight="@dimen/margin_5"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_delete_24px"
+                android:id="@+id/imageDel"
+                android:layout_toLeftOf="@id/imageFv"
+                android:tint="@color/colorPrimary"
                 />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

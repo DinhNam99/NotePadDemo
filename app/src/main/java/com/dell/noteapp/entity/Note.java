@@ -8,7 +8,10 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 public class Note implements Serializable {

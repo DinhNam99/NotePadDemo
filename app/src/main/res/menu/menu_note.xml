@@ -11,7 +11,7 @@
         android:id="@+id/menu_saveUpdate" />
     <item android:title="Favorite"
         android:id="@+id/menu_fav"
-        android:icon="@drawable/ic_favorite_border"
+        android:icon="@drawable/star"
         app:showAsAction="always"
         />
     <item app:showAsAction="always"

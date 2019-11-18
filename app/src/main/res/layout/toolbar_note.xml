@@ -15,5 +15,14 @@
         app:theme="@style/GalaxyZooThemeToolbarDarkOverflow"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/text_18"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:id="@+id/create_edit"
+            />
     </androidx.appcompat.widget.Toolbar>
 </LinearLayout>

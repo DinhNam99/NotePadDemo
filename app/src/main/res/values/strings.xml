@@ -13,8 +13,7 @@
     <string name="date">01-11-2019</string>
     <string name="cancle">Cancle</string>
     <string name="voice_hint">Speak now</string>
-    <string name="draw_options">Draw options:</string>
-    <string name="brush_color">Brush color:</string>
-    <string name="brush_size">Brush size:</string>
+    <string name="not_note">Not results found</string>
+    <string name="not">No data!</string>
 
 </resources>

@@ -13,9 +13,32 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcNote"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/layouttoolbar"
         android:scrollbars="vertical"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/not_note"
+        android:textColor="@color/color_hint"
+        android:textSize="@dimen/text_18"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:id="@+id/tvNotNote"
+        android:visibility="gone"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/not"
+        android:textColor="@color/color_hint"
+        android:textSize="@dimen/text_18"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:id="@+id/tvNot"
+        android:visibility="gone"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,59 +54,5 @@
         app:srcCompat="@drawable/ic_add"
         app:borderWidth="0dp"
         app:elevation="6dp"/>
-
-    <LinearLayout
-        android:id="@+id/layoutOption"
-        android:layout_width="@dimen/layout_150"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_big"
-        android:layout_marginTop="@dimen/margin_big"
-        android:background="@drawable/draw_option"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_mid"
-            android:layout_marginTop="@dimen/margin_5"
-            android:text="@string/all_note"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_15" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_1"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@color/color_hint" />
-
-        <TextView
-            android:id="@+id/fv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_mid"
-            android:layout_marginTop="@dimen/margin_5"
-            android:text="@string/favorite"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_15" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_1"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@color/color_hint" />
-
-        <TextView
-            android:id="@+id/tvCancle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_mid"
-            android:layout_marginTop="@dimen/margin_small"
-            android:layout_marginBottom="@dimen/margin_5"
-            android:text="@string/cancle"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_15" />
-    </LinearLayout>
 
 </RelativeLayout>
